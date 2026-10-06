@@ -1,5 +1,5 @@
 /* Vagon Takip PWA - offline cache */
-const CACHE = "vagon-takip-v2";
+const CACHE = "vagon-takip-v3";
 const ASSETS = ["index.html", "app.js", "seed.js", "manifest.webmanifest", "logo.png"];
 
 self.addEventListener("install", e => {

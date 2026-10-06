@@ -118,12 +118,15 @@ function vagonFiltrele() {
   });
 }
 
+/* Tum Liste modu: arama yapilmadan gecmis kayitlari gorme bayragi */
+let tumListeAcik = false;
+
 function vagonListele() {
   const q = $("f-vagon").value.trim();
   const ay = $("f-ay").value;
   const el = $("vagon-list");
   /* Arama-öncelikli akış: sorgu/filtre yoksa liste açılmaz, arama ekranı gösterilir */
-  if (!q && ay === "all") {
+  if (!q && ay === "all" && !tumListeAcik) {
     const toplam = db.vagonlar.length;
     const devam = db.vagonlar.filter(r => r.durum !== "Tamamlandı").length;
     $("vagon-count").innerHTML = `Toplam vagon sayısı: <b>${toplam}</b>`;
@@ -133,14 +136,21 @@ function vagonListele() {
         <div class="hero-ic">🔍</div>
         <h3>Vagon Arama</h3>
         <p>Yukarıdaki arama kutusuna <b>vagon numarası</b> yazın.<br>Sonuçlar burada listelenecek.</p>
-        <button class="btn btn-s" id="hero-devam">🟠 Devam edenleri göster (${devam})</button>
+        <div class="hero-actions">
+          <button class="btn btn-s" id="hero-devam">🟠 Devam edenler (${devam})</button>
+          <button class="btn btn-s" id="hero-tumliste">📋 Tüm Liste (${toplam})</button>
+        </div>
       </div>`;
     const hd = $("hero-devam");
     if (hd) hd.addEventListener("click", () => { $("f-ay").value = "devam"; vagonListele(); });
+    const ht = $("hero-tumliste");
+    if (ht) ht.addEventListener("click", () => { tumListeAcik = true; vagonListele(); });
     return;
   }
   const rows = vagonFiltrele();
-  $("vagon-count").innerHTML = `Sonuç sayısı: <b>${rows.length}</b>`;
+  $("vagon-count").innerHTML = tumListeAcik && !q && ay === "all"
+    ? `Tüm kayıtlar: <b>${rows.length}</b>`
+    : `Sonuç sayısı: <b>${rows.length}</b>`;
   const devam = rows.filter(r => r.durum !== "Tamamlandı").length;
   $("vagon-info").textContent = devam ? `${devam} devam ediyor` : "";
   if (!rows.length) { el.innerHTML = `<div class="empty">Kayıt bulunamadı.</div>`; return; }
@@ -154,10 +164,15 @@ function vagonListele() {
       </div>
       <div class="vrow"><span>${badge(v.durum || "")}</span></div>
     </div>`).join("");
+  if (tumListeAcik && !q && ay === "all") {
+    el.insertAdjacentHTML("afterbegin", `<button class="btn btn-s btn-geri" id="geri-arama">← Arama ekranına dön</button>`);
+    const gg = $("geri-arama");
+    if (gg) gg.addEventListener("click", () => { tumListeAcik = false; vagonListele(); });
+  }
   el.querySelectorAll(".vcard").forEach(c => c.addEventListener("click", () => vagonDetay(+c.dataset.id)));
 }
 
-$("f-vagon").addEventListener("input", vagonListele);
+$("f-vagon").addEventListener("input", () => { if ($("f-vagon").value.trim()) tumListeAcik = false; vagonListele(); });
 $("f-ay").addEventListener("change", vagonListele);
 
 /* Ay filtresi secenekleri (orijinaldeki gibi bitis tarihlerinden) */
