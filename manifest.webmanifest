@@ -1,0 +1,15 @@
+{
+  "name": "Vagon Bakım ve Takip Sistemi",
+  "short_name": "Vagon Takip",
+  "description": "Atölyeye giren vagonların, gönderilen parçaların ve demirbaşların takibi.",
+  "lang": "tr",
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1a1a",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

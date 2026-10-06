@@ -1,0 +1,42 @@
+# Vagon Bakım ve Takip Sistemi — Mobil (Android) Sürüm
+
+Masaüstündeki "Vagon Takip Programı"nın (Python/CustomTkinter) Android için
+yeniden yapılmış sürümü. Orijinal programdaki tüm veriler (128 vagon,
+2 parça kaydı, 7 demirbaş) bu uygulamaya aktarılmıştır.
+
+## Özellikler (orijinal programla birebir)
+- 🚂 **Vagon Takibi**: ekleme, güncelleme, silme, detay kartı, süre hesabı
+  (giriş→bitiş), durum (Tamamlandı / Bakım devam ediyor / Parça bekliyor),
+  ay-yıl filtresi, "Devam Edenler" filtresi, vagon no ile arama
+- ⚙️ **Gönderilen Parçalar**: ekleme/güncelleme/silme, sökülme/gönderilme/gelme
+  tarihleri, bekleme süresi, GELDİ/YOLDA durumu, vagon no ile arama
+- 📦 **Demirbaş Listesi**: ekleme/güncelleme/silme
+- 📊 **Rapor**: genel istatistik, CSV dışa aktarma (Excel'de açılır),
+  JSON yedek alma / geri yükleme
+
+## Telefona kurulum (Android)
+1. Bu klasörü bir yere barındırmanız veya telefona kopyalamanız gerekir.
+   En kolay yol:
+   - **Seçenek A (önerilen)**: Klasörü ücretsiz bir hosting'e yükleyin
+     (örn. GitHub Pages, Netlify Drop). Telefonun tarayıcısından açıp
+     "Ana ekrana ekle" deyin — tam ekran uygulama gibi çalışır.
+   - **Seçenek B**: Bilgisayarda basit sunucu açıp telefonda açın:
+     `python -m http.server 8000` (klasör içinde), sonra telefonda
+     `http://<bilgisayar-ip>:8000` adresine girin.
+   - **Seçenek C**: Dosyaları telefona kopyalayın (Dosya yöneticisinden
+     index.html'i Chrome ile açın — bu durumda service worker çalışmaz ama
+     uygulama yine çalışır).
+2. Uygulama açıldığında veriler otomatik yüklenir; internet gerekmez.
+
+## Veri güvenliği
+- Veriler telefonun tarayıcı deposunda (localStorage) saklanır.
+- Silinmemesi için periyodik olarak **Rapor → Yedekleme → Yedek Al** ile
+  JSON yedek alın. Yedeği herhangi bir cihazda geri yükleyebilirsiniz.
+
+## Dosyalar
+- `index.html` — arayüz
+- `app.js` — uygulama mantığı
+- `seed.js` — orijinal programdan taşınan veriler (ilk açılışta yüklenir)
+- `manifest.webmanifest`, `sw.js` — PWA (ana ekrana ekleme + offline)
+- `logo.png` — orijinal logo
+- `seed.json` — ham veri yedeği (geliştirici kullanımı için)
