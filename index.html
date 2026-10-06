@@ -77,8 +77,6 @@ nav button.active{color:var(--blue);background:linear-gradient(transparent 55%,r
   box-shadow:0 6px 18px rgba(0,0,0,.45);z-index:55;display:flex;align-items:center;justify-content:center;
 }
 .fab:active{background:var(--blue-d)}
-</style>
-
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .overlay.open{display:flex}
 .sheet{
@@ -109,6 +107,12 @@ nav button.active{color:var(--blue);background:linear-gradient(transparent 55%,r
 .rcard h4{font-size:.95rem;margin-bottom:6px}
 .rcard p{font-size:.78rem;color:var(--mut);margin-bottom:12px}
 .empty{padding:40px 20px;text-align:center;color:var(--mut);font-size:.85rem}
+.hero{text-align:center;padding:48px 20px 24px;color:var(--mut)}
+.hero-ic{font-size:3rem;margin-bottom:12px}
+.hero h3{color:var(--txt);font-size:1.05rem;margin-bottom:10px}
+.hero p{font-size:.85rem;line-height:1.7}
+.hero p b{color:var(--txt)}
+.hero .btn{display:inline-block;flex:none;margin-top:20px;max-width:280px}
 .hidden{display:none!important}
 .toast{
   position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 84px);

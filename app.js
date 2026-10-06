@@ -119,11 +119,30 @@ function vagonFiltrele() {
 }
 
 function vagonListele() {
+  const q = $("f-vagon").value.trim();
+  const ay = $("f-ay").value;
+  const el = $("vagon-list");
+  /* Arama-öncelikli akış: sorgu/filtre yoksa liste açılmaz, arama ekranı gösterilir */
+  if (!q && ay === "all") {
+    const toplam = db.vagonlar.length;
+    const devam = db.vagonlar.filter(r => r.durum !== "Tamamlandı").length;
+    $("vagon-count").innerHTML = `Toplam vagon sayısı: <b>${toplam}</b>`;
+    $("vagon-info").textContent = devam ? `${devam} devam ediyor` : "";
+    el.innerHTML = `
+      <div class="hero">
+        <div class="hero-ic">🔍</div>
+        <h3>Vagon Arama</h3>
+        <p>Yukarıdaki arama kutusuna <b>vagon numarası</b> yazın.<br>Sonuçlar burada listelenecek.</p>
+        <button class="btn btn-s" id="hero-devam">🟠 Devam edenleri göster (${devam})</button>
+      </div>`;
+    const hd = $("hero-devam");
+    if (hd) hd.addEventListener("click", () => { $("f-ay").value = "devam"; vagonListele(); });
+    return;
+  }
   const rows = vagonFiltrele();
-  $("vagon-count").innerHTML = `Toplam vagon sayısı: <b>${rows.length}</b>`;
+  $("vagon-count").innerHTML = `Sonuç sayısı: <b>${rows.length}</b>`;
   const devam = rows.filter(r => r.durum !== "Tamamlandı").length;
   $("vagon-info").textContent = devam ? `${devam} devam ediyor` : "";
-  const el = $("vagon-list");
   if (!rows.length) { el.innerHTML = `<div class="empty">Kayıt bulunamadı.</div>`; return; }
   el.innerHTML = rows.map(v => `
     <div class="vcard" data-id="${v.id}">
